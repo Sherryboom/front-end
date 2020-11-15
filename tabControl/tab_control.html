@@ -1,61 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>选项卡 - Tab Control</title>
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
         }
-        nav li{
-            list-style: none;
-            display: inline;
+
+        .tab {
+            margin: 50px auto;
+            width: 500px;
+            height: 250px;
+            border: 1px solid #999;
         }
-        nav li:hover{
-            background-color: lightblue;
+
+        .tab_head {
+            height: 50px;
+            background: pink;
+            border-bottom: 1px solid #999;
         }
-        .tab{
-            display: none;
-            width: 300px;
-            height: 200px;
+
+        .tab_head_item {
+            float: left;
+            width: 124px;
+            text-align: center;
+            line-height: 50px;
+            border-right: 1px solid #999;
+        }
+
+        .tab_head_item:last-child {
+            width: 125px;
+            border-right: none;
+        }
+
+        .tab_head_item:hover {
+            color: white;
+            background: grey;
+            /* cursor: default; */
         }
     </style>
 </head>
+
 <body>
-    <nav id="nav">
-        <ul>
-            <li class="alive">选项1</li>
-            <li>选项2</li>
-            <li>选项3</li>
-            <li>选项4</li>
-        </ul>
-    </nav>
-    <div id="container">
-        <section class="tab" style="background-color: #ff7675; display: block;">内容1</section>
-        <section class="tab" style="background-color: #fab1a0;">内容2</section>
-        <section class="tab" style="background-color: #a29bfe;">内容3</section>
-        <section class="tab" style="background-color: #b2bec3;">内容4</section>
+    <div class="tab" id="thisTab">
+        <div class="tab_head">
+            <div class="tab_head_item active">选项1</div>
+            <div class="tab_head_item">选项2</div>
+            <div class="tab_head_item">选项3</div>
+            <div class="tab_head_item">选项4</div>
+        </div>
+        <div class="tab_body">
+            <div class="tab_body_item" style="display:block">内容1</div>
+            <div class="tab_body_item">内容2</div>
+            <div class="tab_body_item">内容3</div>
+            <div class="tab_body_item">内容4</div>
+        </div>
     </div>
-</body>
-<script>
-    window.onload = function(){
-        var lis = document.getElementById('nav').getElementsByTagName('li');
-        var tabs = document.getElementById('container').getElementsByClassName('tab');
-        for(var i=0; i<lis.length; i++){
-            lis[i].index = i; //给每个li加上index号
-            lis[i].onclick = function(){
-                // 所有元素先清除样式
-                for(let i=0; i<lis.length; i++){
-                    lis[i].className = '';
-                    tabs[i].style.display = 'none';
+    <script>
+        window.onload = function () {
+            var tab = document.getElementById('thisTab');
+            var head_items = tab.querySelectorAll('.tab_head_item');
+            var body_items = tab.querySelectorAll('.tab_body_item');
+
+            for (var i = 0; i < head_items.length; i++) {
+                // 给每个head_item加上index号
+                head_items[i].index = i;
+                head_items[i].onmouseover = function () {
+                    // 所有元素先清除样式
+                    for (let i = 0; i < head_items.length; i++) {
+                        head_items[i].className = 'tab_head_item';
+                        body_items[i].style.display = 'none';
+                    }
+                    // 给点击的item添加样式
+                    this.className = 'tab_head_item alive';
+                    body_items[this.index].style.display = 'block';
                 }
-                //点击的item添加样式
-                this.className = 'alive';
-                tabs[this.index].style.display = 'block';
             }
         }
-    }
-</script>
+
+    </script>
+</body>
+
 </html>
