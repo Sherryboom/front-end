@@ -17,7 +17,7 @@
             background-color: lightblue;
         }
         .tab{
-            display: block;
+            display: none;
             width: 300px;
             height: 200px;
         }
@@ -33,7 +33,7 @@
         </ul>
     </nav>
     <div id="container">
-        <section class="tab" style="background-color: #ff7675;">内容1</section>
+        <section class="tab" style="background-color: #ff7675; display: block;">内容1</section>
         <section class="tab" style="background-color: #fab1a0;">内容2</section>
         <section class="tab" style="background-color: #a29bfe;">内容3</section>
         <section class="tab" style="background-color: #b2bec3;">内容4</section>
@@ -44,7 +44,6 @@
         var lis = document.getElementById('nav').getElementsByTagName('li');
         var tabs = document.getElementById('container').getElementsByClassName('tab');
         for(var i=0; i<lis.length; i++){
-            console.log(lis[i]);
             lis[i].index = i; //给每个li加上index号
             lis[i].onclick = function(){
                 // 所有元素先清除样式
@@ -52,6 +51,7 @@
                     lis[i].className = '';
                     tabs[i].style.display = 'none';
                 }
+                //点击的item添加样式
                 this.className = 'alive';
                 tabs[this.index].style.display = 'block';
             }
