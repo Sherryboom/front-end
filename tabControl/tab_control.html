@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选项卡 - Tab Control</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        nav li{
+            list-style: none;
+            display: inline;
+        }
+        nav li:hover{
+            background-color: lightblue;
+        }
+        .tab{
+            display: block;
+            width: 300px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <nav id="nav">
+        <ul>
+            <li class="alive">选项1</li>
+            <li>选项2</li>
+            <li>选项3</li>
+            <li>选项4</li>
+        </ul>
+    </nav>
+    <div id="container">
+        <section class="tab" style="background-color: #ff7675;">内容1</section>
+        <section class="tab" style="background-color: #fab1a0;">内容2</section>
+        <section class="tab" style="background-color: #a29bfe;">内容3</section>
+        <section class="tab" style="background-color: #b2bec3;">内容4</section>
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        var lis = document.getElementById('nav').getElementsByTagName('li');
+        var tabs = document.getElementById('container').getElementsByClassName('tab');
+        for(var i=0; i<lis.length; i++){
+            console.log(lis[i]);
+            lis[i].index = i; //给每个li加上index号
+            lis[i].onclick = function(){
+                // 所有元素先清除样式
+                for(let i=0; i<lis.length; i++){
+                    lis[i].className = '';
+                    tabs[i].style.display = 'none';
+                }
+                this.className = 'alive';
+                tabs[this.index].style.display = 'block';
+            }
+        }
+    }
+</script>
+</html>
