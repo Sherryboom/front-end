@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <style>
+        #gameBg{
+            width: 500px;
+            height: 500px;
+            position: relative;
+            overflow: hidden;;
+            background-color: rgb(197, 226, 240);
+            border: 1px solid rgb(100, 125, 134);
+        }
+    </style>
+</head>
+<body>
+    <div id="gameBg"></div>
+</body>
+<script src="./snake.js"></script>
+<script>
+    const col = 10;
+    const row = 10;
+    var bg = document.getElementById('gameBg');
+
+    // 背景
+    createBg(bg, col, row);
+
+    var bodyList = [];
+    var originHeadObj = {
+        offsetLeft: 0,
+        offsetTop: 0,
+        direction: 'right',
+    }
+
+    // 一开始创建头部
+    bodyList.push(originHeadObj);
+    paintNodes(bodyList); 
+    // 创建食物
+    var foodNode = paintFood(col, row, originHeadObj);
+
+    // 监控事件
+    createKeyEvent();
+    
+    // 动起来
+    var time = 300;
+    var timer = setInterval(play, time);
+    function play(){
+        
+        bodyList = moveBody(bodyList);
+        paintNodes(bodyList);
+        
+        // 检测是否撞墙
+        borderState = checkBorder(bodyList[0]);
+        if(!borderState){
+            clearInterval(timer);
+            alert("游戏结束！");
+        }
+
+        // 吃食物
+        foodState = checkFood(bodyList[0], foodNode.style.left, foodNode.style.top);
+        if(foodState){
+            
+            bodyList = createLastNode(bodyList);
+            paintNodes(bodyList);
+
+            // 删除吃掉的食物
+            bg.removeChild(foodNode);
+
+            // 创建新的食物
+            foodNode = paintFood(col, row, bodyList[0]);       
+        }
+        
+    }
+
+</script>
+</html>
